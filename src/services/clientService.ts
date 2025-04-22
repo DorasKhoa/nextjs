@@ -1,8 +1,5 @@
 import { getToken } from "@/lib/auth";
 import { Client } from "@/types/client";
-import { DoctorSummary } from "@/types/doctor";
-import { stringify } from "querystring";
-
 export async function fetchProfile(): Promise<Client> {
     const token = getToken();
 

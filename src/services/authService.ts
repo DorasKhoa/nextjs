@@ -11,7 +11,7 @@ export async function login(payload: LoginPayload) {
         throw new Error("Login failed")
     }
     
-    return res.json();
+    return await res.json();
 }
 
 export async function register(payload: RegisterPayload) {

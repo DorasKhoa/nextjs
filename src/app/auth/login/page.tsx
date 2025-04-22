@@ -4,6 +4,8 @@ import { useRouter } from "next/navigation";
 import { login } from "@/services/authService";
 import { getToken, saveToken } from "@/lib/auth";
 import toast from "react-hot-toast";
+import { jwtDecode } from "jwt-decode";
+import { Token } from "@/types/token";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
@@ -13,7 +15,7 @@ export default function LoginPage() {
 
   useEffect(() => {
     const token = getToken();
-    if(token) {
+    if (token) {
       router.push('/client');
     }
   }, [router]);
@@ -23,8 +25,18 @@ export default function LoginPage() {
     try {
       const data = await login({ email, password });
       saveToken(data.access_token);
-      toast.success("Login successfully!");
-      router.push("/client");
+      toast.success('Login successfully!');
+
+      const decode: Token = jwtDecode(data.access_token);
+      const role = decode.role;
+
+      if(role === 'ADMIN') {
+        router.push('/admin/user');
+      } else if (role === 'DOCTOR') {
+        router.push('/doctor/dashboard');
+      } else {
+        router.push('/client');
+      }
     } catch (err) {
       setError("Email or Password is wrong!");
     }
