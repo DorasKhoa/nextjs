@@ -14,3 +14,9 @@ export interface Schedule {
         name: string;
     };
 }
+
+export interface CreateScheduleDto {
+    start: string;
+    end: string;
+    date: string;
+}

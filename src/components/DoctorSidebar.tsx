@@ -1,9 +1,9 @@
 import React from "react";
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
-import { Users, CalendarClock, Pill, Hospital, LogOut } from "lucide-react"; // hoặc react-icons tùy bạn
+import { Users, CalendarClock, Pill, Hospital, LogOut } from "lucide-react";
 
-export default function AdminSidebar({ children }: { children: React.ReactNode }) {
+export default function DoctorSidebar({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const router = useRouter();
 
@@ -13,17 +13,16 @@ export default function AdminSidebar({ children }: { children: React.ReactNode }
   };
 
   const navItems = [
-    { label: "Users", href: "/admin/user", icon: <Users size={18} /> },
-    { label: "Schedules", href: "/admin/schedule", icon: <CalendarClock size={18} /> },
-    { label: "Medicines", href: "/admin/medicine", icon: <Pill size={18} /> },
-    { label: "Centers", href: "/admin/center", icon: <Hospital size={18} /> },
+    { label: "Schedules", href: "/doctor/schedule", icon: <Users size={18} /> },
+    { label: "Orders", href: "/doctor/order", icon: <CalendarClock size={18} /> },
+    { label: "Profile", href: "/doctor/profile", icon: <Pill size={18} /> },
   ];
 
   return (
     <div className="flex min-h-screen">
       <aside className="w-64 bg-blue-700 text-white p-5 flex flex-col justify-between">
         <div>
-          <h2 className="text-2xl font-bold mb-6">Admin Dashboard</h2>
+          <h2 className="text-2xl font-bold mb-6">Doctor Dashboard</h2>
           <ul className="space-y-3">
             {navItems.map(({ label, href, icon }) => (
               <li key={href}>

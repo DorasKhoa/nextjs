@@ -15,6 +15,7 @@ export async function fetchDoctors(): Promise<DoctorSummary[]> {
     return rawDoctors.map((doc: any) => ({
         id: doc._id,
         name: doc.name,
+        email: doc.email,
         fees: doc.fees,
         avatar: doc.avatar,
         category: doc.category
@@ -31,7 +32,7 @@ export async function fetchDoctorById(id: string): Promise<Doctor> {
     const doc = await res.json()
     console.log()
     return {
-        id: doc.id,
+        _id: doc.id,
         avatar: doc.avatar,
         name: doc.name,
         phone: doc.phone,
@@ -48,4 +49,34 @@ export async function fetchDoctorById(id: string): Promise<Doctor> {
             status: s.status
         }))
     }
+}
+
+export async function doctorProfile(): Promise<Doctor> {
+    const token = getToken();
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/profile`,{
+        method: 'GET',
+        headers: {Authorization: `Bearer ${token}`}
+    })
+    if(!res.ok) {
+        const msg = await res.text();
+        throw new Error(msg || 'Failed to fetch profile');
+    }
+    return await res.json();
+}
+
+export async function updateDoctor(form: FormData): Promise<string> {
+    const token = getToken()
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/users/profile`,{
+        method: 'PATCH',
+        headers: {
+            Authorization: `Bearer ${token}`
+        },
+        body: form
+    })
+    if(!res.ok) {
+        const msg = await res.text();
+        throw new Error(msg || 'Failed to update profile')
+    }
+    const result = await res.json();
+    return result.message
 }

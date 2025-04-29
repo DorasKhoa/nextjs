@@ -1,5 +1,5 @@
 import { getToken } from "@/lib/auth";
-import { Order } from "@/types/order";
+import { DocOrder, Order } from "@/types/order";
 import { start } from "repl";
 
 export async function bookSchedule(scheduleId: string): Promise<string> {
@@ -78,4 +78,41 @@ export async function cancelOrder(orderId: string): Promise<string> {
     if(!res.ok) throw new Error(data.message || 'Failed to cancel');
 
     return data.message;
+}
+
+export async function rejectOrder(orderId: string): Promise<string> {
+    const token = getToken();
+
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/orders/reject/${orderId}`,{
+        method: 'PATCH',
+        headers: {Authorization: `Bearer ${token}`}
+    })
+
+    const data = await res.json()
+    if(!res.ok) throw new Error(data.message || 'Failed to reject');
+
+    return data.message;
+}
+
+export async function approveOrder(orderId: string): Promise<string> {
+    const token = getToken();
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/orders/approve/${orderId}`,{
+        method: 'PATCH',
+        headers: {Authorization: `Bearer ${token}`}
+    });
+    if(!res.ok) {
+        const msg = await res.text();
+        throw new Error(msg || 'Failed to approve order');
+    }
+    const result = await res.json()
+    return result.message;
+}
+
+export async function fetchDoctorOrders(): Promise<DocOrder[]> {
+    const token = getToken();
+    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/orders/doctor`, {
+        headers: { Authorization: `Bearer ${token}` }
+    });
+    if (!res.ok) throw new Error('Failed to fetch doctor orders');
+    return await res.json();
 }
