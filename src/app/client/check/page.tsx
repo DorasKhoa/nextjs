@@ -1,5 +1,13 @@
-export default function HistoryPage() {
-    return(
-        <h1>This is history page</h1>
-    )
-}
+'use client';
+
+import PaymentHistory from '@/components/PaymentHistory';
+import Header from '@/components/Header';
+
+export default function PaymentHistoryPage() {
+    return (
+        <div>
+            <Header />
+            <PaymentHistory />
+        </div>
+    );
+} 

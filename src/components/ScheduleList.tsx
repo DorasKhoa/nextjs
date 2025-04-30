@@ -64,6 +64,7 @@ const ScheduleList: React.FC = () => {
         try {
             await deleteSchedule(scheduleId);
             toast.success('Schedule deleted!');
+            setSchedules(prevSchedules => prevSchedules.filter(schedule => schedule._id !== scheduleId));
             await loadSchedules();
         } catch (err: any) {
             toast.error(err.message || 'Failed to delete schedule');

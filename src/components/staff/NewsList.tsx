@@ -60,15 +60,7 @@ export default function NewsList() {
             <div className="max-w-7xl mx-auto p-6">
                 <div className="flex justify-between items-center mb-6">
                     <h1 className="text-2xl font-bold">News Management</h1>
-                    <button
-                        onClick={() => router.push('/staff/news/create')}
-                        className="flex items-center gap-2 px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-                    >
-                        <Plus size={20} />
-                        Create New News
-                    </button>
                 </div>
-
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                     {news.map((item) => (
                         <div key={item._id} className="bg-white rounded-lg shadow-md overflow-hidden">

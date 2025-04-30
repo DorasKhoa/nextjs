@@ -13,7 +13,7 @@ const CreateUserCard: React.FC<Props> = ({ onSuccess }) => {
     password: '',
     category: '',
     fees: '',
-    role: 'USER',
+    role: 'DOCTOR',
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -26,7 +26,7 @@ const CreateUserCard: React.FC<Props> = ({ onSuccess }) => {
       const msg = await createUser(form);
       toast.success(msg, { id: toastId });
 
-      setForm({ name: '', email: '', password: '', category: '', fees: '', role: 'USER' });
+      setForm({ name: '', email: '', password: '', category: '', fees: '', role: 'DOCTOR' });
       if (onSuccess) onSuccess();
     } catch (err: any) {
       toast.error(err.message || 'Create failed', { id: toastId });
